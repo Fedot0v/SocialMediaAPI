@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from social.models import User, Like, Post, Comment
+
+admin.register(User)
+admin.register(Post)
+admin.register(Comment)
+admin.register(Like)
+
