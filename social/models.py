@@ -25,6 +25,7 @@ def create_custom_path(instance, filename):
 
 
 class User(AbstractUser):
+    email = models.EmailField(unique=True)
     image = models.ImageField(
         upload_to=create_custom_path,
         null=True,
