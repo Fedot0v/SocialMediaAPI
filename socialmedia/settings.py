@@ -149,6 +149,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "user", "post")
 
 CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'redis://redis:6379'
-CELERY_TIMEZONE = "Europe/Kyiv"
+CELERY_TIMEZONE = 'Europe/Kyiv'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Social Media API',
+    'DESCRIPTION': 'Make posts, write comments, etc.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'defaultModelRendering': 'model',
+        'defaultModelsExpandDepth': 2,
+        'defaultModelExpandDepth': 2,
+    }
+}
