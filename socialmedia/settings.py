@@ -142,6 +142,7 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.UserRateThrottle",
     ],
     'DEFAULT_THROTTLE_RATES': {"anon": "100/day", "user": "500/day"},
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 MEDIA_URL = "/media/"
