@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from celery.utils.time import make_aware
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 from rest_framework import viewsets, status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
@@ -17,6 +18,23 @@ from social.serializers import (
 from social.tasks import create_post_at_a_certain_time
 
 
+@extend_schema(
+    request={
+        'application/json': {
+            'type': 'object',
+            'properties': {
+                'content': {'type': 'string'},
+                'image': {'type': 'string', 'format': 'binary'},
+                'time': {'type': 'string', 'format': 'date-time', 'example': '2024-10-18 14:30:00'}
+            },
+            'required': ['content', 'time']
+        }
+    },
+    responses={
+        201: OpenApiResponse(description="Post creation scheduled"),
+        400: OpenApiResponse(description="Invalid input")
+    }
+)
 @api_view(["POST"])
 def schedule_post_creation(request):
     content = request.data.get("content")
@@ -95,6 +113,18 @@ class UserViewSet(viewsets.ModelViewSet):
             },
             status=status.HTTP_200_OK
         )
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "username",
+                type={"type": "array", "items": {"type": "string"}},
+                description="Filter by username (ex. ?username=testuser)"
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
